@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import RegValidation from "./RegValidation";
 import "./register.css";
 
