@@ -1,11 +1,13 @@
 import React from 'react';
+import { updateLoggedIn } from '../../context/ProtectedRoutes';
 import './homepage.css';
 
 
 const Homepage = (handleLogin) => {
     const handleLogout = (e) => {
         e.preventDefault();
-         handleLogin(false)
+        // handleLogin(false)
+        updateLoggedIn()
     }
   return (
       <div className='content'>

@@ -1,34 +1,37 @@
-import './App.css';
-import Homepage from './components/homepage/Homepage';
-import Login from './components/login/Login';
-import Register from './components/register/Register';
-import React, { Suspense, lazy, useState } from "react";
-import { BrowserRouter as Router, Switch, NavLink, Route, Routes, Navigate } from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Homepage from "./components/homepage/Homepage";
+import Login from "./components/login/Login";
+import Navbar from "./components/navbar/Navbar";
+import Register from "./components/register/Register";
+import ProtectedRoutes from "./context/ProtectedRoutes";
+
+/**
+ *
+ * Application component with Routes to different paths
+ * @returns
+ */
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const handleLogin = (test) => {
-    alert('test' + test);
-    setLoggedIn(test);
-  }
-
   return (
     <Router>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Routes>
-          <Route path="/" element={
-            loggedIn ? (<Navigate to='/HomePage' />
-            ) : (
-              <Login handleLogin={handleLogin} />
-            )
-          }
-          />
-          <Route path="/register" element={<Register />} />
-          {/* <Route path='/Homepage' element={!loggedIn ? (<Login handleLogin={handleLogin} />)} */}
-          
-            {/* /> */}
-        </Routes>
-      </Suspense>
+      <Navbar />
+      <Routes>
+        {/**
+         * Public routes
+         */}
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        {/**
+         * Home page is protected
+         */}
+
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/home" element={<Homepage />} />
+        </Route>
+      </Routes>
     </Router>
   );
 }

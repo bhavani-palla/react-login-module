@@ -55,4 +55,11 @@ a{
 }
 .error{
     color:red;
+    display: block;
+    margin: 0px;
+}
+.regSuccess{
+    font-size: small;
+    color: rgb(65, 132, 177);
+
 }
