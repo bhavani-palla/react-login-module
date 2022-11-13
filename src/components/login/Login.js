@@ -28,15 +28,25 @@ const Login = ({ handleLogin }) => {
     }
 
 
-
+    //User rest endpoint to post user details to register
     const response = await fetch("http://localhost:3100/api/login", {
        method: "POST",
        headers: {
         "Content-Type": "application/json",
        },
        body: JSON.stringify(user),
-     });
+    });
 
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        setErrors({ error: 'Please register if you are already not a user' })
+      } else {
+        setErrors({ error: "Something went wrong" });
+      }
+    }
+
+    
     if (response.ok) {
       const body = await response.json();
        updateLoggedIn();
@@ -60,6 +70,9 @@ const Login = ({ handleLogin }) => {
       <form id="login_form" className="login-form">
         <h1>Login</h1>
 
+        {errors.error && <p className="error">{errors.error}</p>}
+
+        {errors.userName && <p className="error">{errors.userName}</p>}
         <div className="form_div">
           <label>username:</label>
           <input
@@ -69,8 +82,8 @@ const Login = ({ handleLogin }) => {
             value={user.userName}
             onChange={handleChange}
           />
-          {errors.userName && <p className="error">{errors.userName}</p>}
 
+          {errors.password && <p className="error">{errors.password}</p>}
           <label>Password:</label>
           <input
             id="pass"
@@ -80,7 +93,6 @@ const Login = ({ handleLogin }) => {
             value={user.password}
             onChange={handleChange}
           />
-          {errors.password && <p className="error">{errors.password}</p>}
 
           <button
             className="submit-btn"
@@ -94,7 +106,7 @@ const Login = ({ handleLogin }) => {
 
         <div className="register-text">
           <p>
-           Not a user? Register <a href="register">Here</a>
+            Not a user? Register <a href="register">Here</a>
           </p>
         </div>
       </form>

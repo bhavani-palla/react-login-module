@@ -3,7 +3,7 @@ import { updateLoggedIn } from '../../context/ProtectedRoutes';
 import './homepage.css';
 
 
-const Homepage = (handleLogin) => {
+const Homepage = () => {
     const handleLogout = (e) => {
         e.preventDefault();
         // handleLogin(false)
